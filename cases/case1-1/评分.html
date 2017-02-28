@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			div{
+				height: 24px;
+				line-height: 24px;
+			}
+			span{
+				padding-left: 10px;
+			}
+			dt{
+				float: left;
+			}
+			dd{
+				width: 22px;
+				height: 24px;
+				float: left;
+				background: url(img/xing.png);
+			}
+		</style>
+		<script>
+			window.onload=function(){
+				var dds=document.querySelectorAll("dd");
+				var cn=-1;	//保存点击的索引值
+				
+				var span=document.querySelector("span");
+				var text=['很差','较差','一般','良好','优秀'];
+				
+				//for循环给每个dd添加事件
+				for(var i=0;i<dds.length;i++){
+					//鼠标移入事件
+					dds[i].index=i;
+					dds[i].onmouseover=function(){
+						//鼠标移入的时候，让星星显示出来
+						
+						//this.style.background='url(img/xing1.png)'
+						
+						/*
+						 * 鼠标移上去的时候，要让前面的所有星星都显示出来
+						 * 所以要用到for
+						 * 
+						 */
+						
+						//鼠标移入的时候，先把所有的星星全部隐藏了，再显示当前的星
+						for(var i=0;i<dds.length;i++){
+							dds[i].style.background='url(img/xing.png)';
+						}
+						
+						for(var i=0;i<=this.index;i++){
+							/*
+							 * 第二个星之后的所有星都要变成黄色 
+							 * 第二个星的this.index=1
+							 * 
+							 */
+							dds[i].style.background='url(img/xing1.png)';
+							if(this.index>1){
+								//这个条件成立，说明现在鼠标在第二个星之后
+								dds[i].style.background='url(img/xing2.png)';
+							}
+						}
+						
+						span.innerHTML=text[this.index];
+					};
+					
+					//鼠标移开的时候
+					dds[i].onmouseout=function(){
+						//alert(1);
+						//鼠标没点击的时候，要把所有星星都清空
+						for(var i=0;i<dds.length;i++){
+							dds[i].style.background='url(img/xing.png)';
+						}
+						
+						/*
+						 * 点击的效果只有在鼠标移开时候才能看到
+						 * 所以点击后要做的事件，要放到鼠标移开的事件里
+						 * 鼠标离开的时候，要做的事情是，让星星显示或者隐藏
+						 * 
+						 */
+						
+						//这个for循环就是决定星星显示或者隐藏
+						for(var i=0;i<=cn;i++){
+							dds[i].style.background='url(img/xing1.png)';
+							if(cn>1){
+								//这个条件成立，说明现在鼠标在第二个星之后
+								dds[i].style.background='url(img/xing2.png)';
+							}
+						}
+						
+						//alert(cn<0)
+						if(cn<0){
+							span.innerHTML='还没有评分哦!'
+						}else{
+							span.innerHTML=text[cn];
+						}
+					};
+					
+					dds[i].onclick=function(){
+						cn=this.index;	//点击的时候把点击的那个索引值赋给cn
+					};
+				}
+			};
+		</script>
+	</head>
+	<body>
+		<div id="box">
+			<dl>
+				<dt>总体评价：</dt>
+				<dd></dd>
+				<dd></dd>
+				<dd></dd>
+				<dd></dd>
+				<dd></dd>
+			</dl>
+			<span>还没有评分哦!</span>
+		</div>
+	</body>
+</html>

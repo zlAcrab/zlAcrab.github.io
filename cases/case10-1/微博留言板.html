@@ -1,0 +1,357 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+<link href="style/weibo.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="znsArea">
+<!--留言-->
+     <div class="takeComment">
+        <textarea name="textarea" class="takeTextField" id="tijiaoText"></textarea>
+        <div class="takeSbmComment">
+            <input type="button" id="btn1" class="inputs" value="" />
+            <span>(可按 Enter 回复)</span>
+        </div>
+    </div>
+<!--已留-->
+    <div class="commentOn">
+        <div class="messList" id="div1" style="height:502px">
+        	<!--<div class="reply">
+                <p class="replyContent">卫士，新款卫士将推出总共14种车身式样。其中， XS旅行款车型售价为32295英镑(约33.6万元)。</p>
+                <p class="operation">
+                    <span class="replyTime">2011-09-08 16:37:60</span>
+                    <span class="handle">
+                    	<a href="javascript:;" class="top">0</a>
+                        <a href="javascript:;" class="down_icon">0</a>
+                        <a href="javascript:;" class="cut">删除</a>
+                    </span>
+                </p>
+            </div>-->
+        </div>
+        <div class="page" id="page">
+        	<a href="javascript:;" class="active">1</a>
+        	<a href="javascript:;">2</a>
+        	<a href="javascript:;">3</a>
+        </div>
+    </div>
+</div>
+</body>
+<script src="jquery-1.11.1.js" type="text/javascript" charset="utf-8"></script>
+<script src="pages.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+$(function(){
+	var $btn = $('#btn1'),//按钮
+	$content = $('#tijiaoText'),//内容
+	$div1 = $('#div1'),//插入内容的box
+	pageNum = 1,
+	arrDown = [],
+	$page = $('#page'),
+	hash = window.location.hash;
+	hash = hash?hash:window.location.hash='page='+pageNum;
+	
+	pageNum = (hash.split('=')[1])*1;
+	
+	/*
+		
+		[{id:123},{id:932},{id:987}]
+		1.避免刷新页面的时候数组清空
+		2.防止下次创建的cookie将已有cookie给覆盖
+	*/
+	
+	if(getCookie('down')){
+		arrDown = JSON.parse(getCookie('down'));
+	}
+	
+	//当hash值改变的时候，触发这个事件
+	window.onhashchange = function(){
+		
+		pageNum = hash = window.location.hash.split('=')[1];
+		//如果手动设置hash为负数，就默认为第一页。
+		if(pageNum < 1){
+			window.location.hash='page=1';
+		}
+		addContent();
+		setPages();
+	}
+	
+	
+	
+	
+	/*
+		点击按钮的时候先将用户输入的内容提交到后端，
+		然后前端显示。
+	*/
+	/*
+		添加数据
+		weibo.php?act=add&content=xxx	添加一条
+		返回：{error:0, id: 新添加内容的ID, time: 添加时间}
+	*/
+	$btn.on('click',function(){
+		var val = $content.val();
+		$.ajax({
+			url:'weibo.php',
+			dataType:'json',
+			data:{
+				act:'add',
+				content:val
+			},
+			success:function(json){
+				//成功之后添加页面内容
+				if(!json.error){
+					window.location.hash = '';
+					window.location.hash = 'page=1';
+//					console.log(json)
+//					pageNum = 1;
+//					addContent();
+					$content.val('');
+				}	
+			}
+		});
+	});
+	
+	//ctrl+回车
+	
+	$content.on('keydown',function(ev){
+		//console.log(ev)
+		if(ev.which == 13 && ev.ctrlKey){
+			$btn.trigger('click');
+		}
+	});
+	
+	
+	/*
+		打开页面请求数据 
+		weibo.php?act=get&page=1
+		返回：[{id: ID, content: "内容", time: 时间戳, acc: 顶次数, ref: 踩次数}, {...}, ...]
+	*/
+	addContent();
+	function addContent(){
+		$.ajax({
+			url:'weibo.php',
+			data:{
+				act:'get',
+				page:pageNum
+			},
+			success:function(data){
+				// 把json格式转化为对象格式
+				var arr = (new Function('','return'+data))();
+				// 渲染数据前需要先清空上一次的数据
+				$div1.html('');
+	
+				$.each(arr,function(i,e){
+					
+					
+					var newDiv = createDiv(e.content,e.time,e.id,e.acc);
+					//console.log(newDiv)
+					$div1.append(newDiv);
+				});
+			}
+		});
+	};
+	
+	
+	
+	
+	
+	function toDou(n){
+		return n < 10?'0'+n:''+n;
+	}
+	
+	
+	function createDiv(val,time,id,acc){
+		var newDate = new Date();
+		var newDiv = $('<div class="reply" data-id="'+id+'"/>');
+					
+//					console.log(json.time);
+		/*
+			只要遇到服务器时间为1970就在时间戳后面加乘以1000
+			
+			2016-09-16 10:23:34
+		*/
+		//服务器的时间
+		var oDate = new Date(time*1000),
+		iY = oDate.getFullYear(),
+		iMou = oDate.getMonth()+1,
+		iDay = oDate.getDate(),
+		iHou = oDate.getHours(),
+		iMiu = oDate.getMinutes(),
+		iSec = oDate.getSeconds();
+		
+		var str = iY+'-'+toDou(iMou)+'-'+toDou(iDay)+' '+toDou(iHou)+':'+toDou(iMiu)+':'+toDou(iSec);
+		
+		newDiv.html(
+				`<p class="replyContent">${val}</p>
+	               <p class="operation">
+	                    <span class="replyTime">${str}</span>
+	                    <span class="handle">
+	                    	<a href="javascript:;" class="top">${acc}</a>
+	                        <a href="javascript:;" class="down_icon">0</a>
+	                        <a href="javascript:;" class="cut">删除</a>
+	                    </span>
+	                </p>`
+		);
+		
+		/*
+			顶一条 
+			weibo.php?act=acc&id=num			顶某一条数据
+				返回：{error:0}
+		*/
+		
+		var $top = newDiv.find('.top');
+		var $cut = newDiv.find('.cut');
+		//当点击顶按钮的时候
+		$top.on('click',function(){
+			//获取当前点击的id
+			var id = $(this).closest('.reply')[0].dataset.id;
+			var _this =  $(this);
+			//查看是否点过，假设默认是没点过
+			var onOff2 = true;
+			//获取cookie值，目的是为了查看有没有点击过
+			var strId = getCookie('down');
+			//如果获取到指定的cookie，查看cookie中没有我们点击过的ID，如果有，onOff2 = false(点击过)
+			if(strId){
+				var obj = JSON.parse(strId);
+				for(var i=0;i<obj.length;i++){
+					if(obj[i].id == id){
+						onOff2 = false;
+					};
+				};
+			};
+			//如果没有点击过，就请求ajax
+			if(onOff2){
+				$.ajax({
+					url:'weibo.php',
+					data:{
+						act:'acc',
+						id:id
+					},
+					success:function(json){
+						var obj = eval('('+json+')');
+						//请求成功
+						if(!obj.error){
+							arrDown.push({"id":id});    //[{id:123},{id:932},{id:987}]
+							var topNum = _this.text();
+							topNum++;
+							_this.text(topNum);
+							/*
+								 当请求成功之后将本地点击的id存入cookie，以便下次点击的时候验证已点击过。
+							*/
+							setCookie('down',JSON.stringify(arrDown),newDate.getTime(),1);
+							alert('恭喜点击成功!');
+						};
+					}
+				});
+			}else{
+				alert('请明天再来!');
+			}
+		});
+		
+		
+		/*
+			删除：
+				weibo.php?act=del&id=num
+		*/
+		$cut.on('click',function(){
+			var id = $(this).closest('.reply')[0].dataset.id;
+			$.ajax({
+				url:'weibo.php',
+				data:{
+					act:'del',
+					id:id
+				},
+				success:function(json){
+					if(!json.error){
+						// 重新渲染当前页的数据
+						addContent();
+						// 重新渲染页数
+						setPages();
+					}
+				}
+			});
+		});
+		return newDiv;
+		//console.log(newDiv);
+	}
+	
+	/*
+		分页：
+			weibo.php?act=get_page_count 获取页数
+				返回：{count:页数}
+	*/
+	setPages();
+	function setPages(){
+		$.ajax({
+			url:'weibo.php',
+			dataType:'json',
+			data:{
+				act:'get_page_count'
+			},
+			success:function(json){
+				//count  页码  总页数
+				//console.log(json);
+				/*
+					id : 插入的父元素
+					cb : 必须要传（回调函数）
+					active:当前页码的样式（类名）
+					all ： 总页数
+					num ： 当前页 
+				*/
+				
+				/*
+				 
+				 /*
+				 	如果删除的时候本页数据没有了，那么自动返回上一页数据
+				 	只要hash或者pageNum比后端数据的总页数要大，还是走数据，不走hash
+				 	
+				 */
+				if(json.count < pageNum){
+					pageNum = json.count;
+					window.location.hash = 'page='+pageNum;
+				}
+				createPage({
+					id:$page[0],
+					active:'active',
+					all:json.count,
+					num:pageNum,
+					cb:function(num,all){
+						pageNum = num;
+						addContent();
+						window.location.hash = 'page='+pageNum;
+					}
+				});
+			}
+		});
+	}
+	
+	
+	
+	
+
+	function setCookie(key,value,seavrTime,time){
+		time = time || 0;
+		var oDate = new Date(seavrTime);
+		oDate.setDate(oDate.getDate()+time);
+		if(time){
+			//console.log(key+'='+value+';expires='+oDate)
+			document.cookie = key+'='+value+';expires='+oDate;
+		}else{
+			document.cookie = key+'='+value;
+		}
+	}
+	function getCookie(key){
+		var str = document.cookie;
+		var arr = str.split('; ');
+		var val = '';
+		var a = arr.forEach(function(e){
+			if(e.split('=')[0] == key){
+				val = e.split('=')[1];
+			}
+		});
+		return val?val:false;
+	};
+
+});
+</script>
+</html>

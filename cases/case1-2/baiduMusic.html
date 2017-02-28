@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>百度音乐</title>
+	<style>
+		* { margin: 0; padding: 0; list-style: none;}
+		body { background-color: #666;}
+		ul { width: 600px; margin: 0 auto; margin-top: 50px; background-color: #fff; border: 10px solid #e0ffff;}
+		label { float: left;}
+		li { height: 50px; line-height: 50px; font-size: 20px; color: #000; overflow: hidden; transition: 0.5s; }
+		li input { margin: 0 30px; height: 50px; float: left;}
+		li span:nth-child(1) { width: 320px; float: left; text-indent: 50px; transition:1s;}
+		li:hover span:nth-child(1) { text-indent: 80px; text-shadow: 2px 2px 10px #fff; }
+		li span:nth-child(2) { width: 120px; float: left; text-indent: 0px; transition: 1s;}
+		li:hover span:nth-child(2) { text-indent: 30px; text-shadow: 2px 2px 2px #fff; }
+
+		li:nth-child(2n+1) { color: #00bfff;}
+		li:nth-child(2n) { background-color: #00bfff; color: #fff;}
+	</style>
+	<script>
+	/*
+		需求：
+			百度音乐效果
+
+		分析：	 
+			1. 歌曲行 点击时
+				当前行 背景色发生了变化 checkbox 选中  
+				再次点击时 当前行的背景色还原 checkbox 撤销选中
+				如果全选的情况下点击 全选行的 checkbox 撤销选中
+				全选行的 background 还原
+
+			2. 全选行 点击时
+				所有行 背景色发生变化 checkbox 选中
+				再次点击时 所有行 背景色还原 checkbox 释放
+	*/
+		window.onload = function() {
+			var input = document.querySelectorAll('input');
+			var label = document.querySelectorAll("label");
+			var li = document.querySelectorAll('li');
+
+			for (var i = 0; i < input.length; i++) {
+				input[i].index = [i];
+				input[i].onclick = function() {
+					if ( this.index < 11 ) {
+						if (this.checked) {
+							li[this.index].style.backgroundColor = "#3cb371";
+							li[this.index].style.color = "#fff";
+							var allOnOff = true;
+							for (var i = 0; i < li.length-1; i++) {
+								allOnOff *= input[i].checked;
+							};
+							if ( allOnOff) {
+								li[11].style.backgroundColor = "#3cb371";
+								li[11].style.color = "#fff";
+								input[11].checked = true;
+							};
+						} else{
+							if ( this.index%2 ) {
+								li[this.index].style.backgroundColor = "#00bfff";
+								li[this.index].style.color = "#fff";
+							} else{
+								li[this.index].style.backgroundColor = "#fff";
+								li[this.index].style.color = "#00bfff";
+							};
+
+							if( input[11].checked ){
+								li[11].style.backgroundColor = "#00bfff";
+								li[11].style.color = '#fff';
+								input[11].checked = false;
+							}
+						};
+					} else{
+						if(this.checked){
+							for (var i = 0; i < li.length; i++) {
+								li[i].style.backgroundColor = "#3cb371";
+								li[i].style.color = "#fff";
+								input[i].checked = true;
+							};
+						} else{
+							for (var i = 0; i < li.length; i++) {
+								if ( i%2 ) {
+								li[i].style.backgroundColor = "#00bfff";
+								li[i].style.color = "#fff";
+								} else{
+									li[i].style.backgroundColor = "#fff";
+									li[i].style.color = "#00bfff";
+								};
+								input[i].checked = false;
+							};
+						}
+					};
+				};
+			};
+		};
+
+	</script>
+</head>
+<body>
+	<ul>
+		<li>
+			<input type="checkbox" name="song1" id="choice1"/>
+			<label for="choice1">
+				<span>我不能悲伤的坐你身旁</span><span>左小祖咒</span>
+			</label>
+		</li>
+		<li>
+			<input type="checkbox" name="song1" id="choice2"/>
+			<label for="choice2"><span>梵高先生</span><span>李志</span></label>
+		</li>
+		<li>
+			<input type="checkbox" name="song1" id="choice3"/>
+			<label for="choice3">
+				<span>青春是把上了膛的枪</span><span>丝绒公路</span>
+			</label>
+			
+		</li>
+		<li>
+			<input type="checkbox" name="song1" id="choice4"/>
+			<label for="choice4">
+				<span>乌兰巴托的夜</span><span>左小祖咒</span>
+			</label>
+			
+		</li>
+		<li>
+			<input type="checkbox" name="song1" id="choice5"/>
+			<label for="choice5"><span>易燃易爆炸</span><span>陈粒</span></label>
+		</li>
+		<li>
+			<input type="checkbox" name="song1" id="choice6"/>
+			<label for="choice6"><span>一个歌手的情书</span><span>周三</span></label>
+		</li>
+		<li>
+			<input type="checkbox" name="song1" id="choice7"/>
+			<label for="choice7"><span>蒙娜丽莎的眼泪</span><span>林志炫</span></label>
+		</li>
+		<li>
+			<input type="checkbox" name="song1" id="choice8"/>
+			<label for="choice8"><span>我是愤怒</span><span>黄家驹</span></label>
+			
+		</li>
+		<li>
+			<input type="checkbox" name="song1" id="choice9"/>
+			<label for="choice9"><span>无地自容</span><span>周晓鸥</span></label>
+		</li>
+		<li>
+			<input type="checkbox" name="song1" id="choice10"/>
+			<label for="choice10"><span>山丘</span><span>李宗盛</span></label>
+		</li>
+		<li>
+			<input type="checkbox" name="song1" id="choice11"/>
+			<label for="choice11"><span>生如夏花</span><span>朴树</span></label>
+		</li>
+		<li>
+			<input type="checkbox" name="song1" id="choice12"/>
+			<label for="choice12"><span>全选</span></label>
+			
+		</li>
+		
+	</ul>
+</body>
+</html>

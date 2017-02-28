@@ -1,0 +1,200 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>选项卡里套选项卡</title>
+	<style>
+		body, ul, li, h2 {
+			padding: 0;
+			margin: 0;
+		}
+		h2 {
+			font-size: 14px;
+		}
+		li {
+			list-style: none;
+		}
+		#tabs {
+			width: 960px;
+			background: #E7E7E7;
+			overflow: hidden;
+			margin: 50px auto;
+		}
+		#nav {
+			width: 150px;
+			float: left;
+		}
+		#nav li {
+			width: 143px;
+			height: 110px;
+			border: 1px solid #eee;
+			text-align: center;
+			line-height: 110px;
+			font-size: 14px;
+			font-weight: bold;
+			cursor: pointer;
+		}
+        #nav li.selected {
+            background: rgba(255,255,255,.8);
+        }
+		#contents {
+			width: 810px;
+			height: 445px;
+			float: right;
+            position: relative;
+		}
+        #contents img {
+            width: 810px;
+            height: 445px;
+            /*display: none;*/
+        }
+		#contents ul {
+			position: absolute;
+			bottom: 0px;
+            width: 100%;
+            text-align: justify;
+			background:rgba(255,255,255,.4);
+            display: table;
+            height: 40px;
+		}
+		#contents ul li {		
+            line-height: 40px;
+            text-align: center;
+            border: 1px solid #eee;
+            padding: 0 20px;
+            cursor: pointer;
+            display: table-cell;
+             height: 40px;
+             color: #000;
+		}
+        #contents ul.show {
+            display: table;
+        }
+        #contents ul li.active {
+            background: #f08080;
+            
+        }
+	</style>
+	<script>
+	/*
+		需求：选项卡套选项卡。
+		分析：1.获取元素
+			  2.左边栏文字初始化
+			  3.给左边主导航添加点击事件
+			  		a.点击时主导航时的样式变化，及读取图片
+			  		b.点击时副导航自动生成
+			  		c.获取副导航li，并且给副导航第一个添加默认点击状态
+			  		d.给副导航添加点击事件
+	*/
+	window.onload = function(){
+    	//添加数组对象
+        var arrImg = [
+        	{
+				"name":"小清新",
+				"right":[
+						{"text":"选项卡1","src":"img/1.jpg"},
+						{"text":"选项卡2","src":"img/2.jpg"},
+						{"text":"选项卡3","src":"img/3.jpg"}
+					
+						]
+			},
+			{
+				"name":"动漫世界",
+				"right":[
+						{"text":"选项卡a","src":"img/a.jpg"},
+						{"text":"选项卡b","src":"img/b.jpg"},
+						{"text":"选项卡c","src":"img/c.jpg"},
+						{"text":"选项卡d","src":"img/d.jpg"}
+						]
+			},
+			{
+				"name":"卡通世界",
+				"right":[
+						{"text":"选项卡4","src":"img/4.jpg"},
+						{"text":"选项卡5","src":"img/5.jpg"},
+						{"text":"选项卡6","src":"img/6.jpg"}
+						]
+			},
+			{
+				"name":"萌宠世界",
+				"right":[
+						{"text":"选项卡e","src":"img/e.jpg"},
+						{"text":"选项卡f","src":"img/f.jpg"},
+						{"text":"选项卡g","src":"img/g.jpg"},
+						{"text":"选项卡h","src":"img/h.jpg"}
+						]
+			}];
+			//1.获取元素
+			var	leftLis=document.querySelectorAll('#nav li');
+			var rightUls=document.querySelector('#contents ul');
+			var img=document.querySelector('#contents img');
+			//2.左边栏文字初始化
+			for (var i = 0; i < leftLis.length; i++) {
+				leftLis[i].index=i;
+				leftLis[i].innerHTML = arrImg[i].name;
+				leftLis[i].onclick=function(){
+					rightFn(this);
+				}
+				//**让默认状态下，副导航的li初始化就会显示！即默认为主导航第一个li初始化时默认为点击状态
+				leftLis[0].onclick();
+			};
+			//3.添加点击事件的函数调用
+			function rightFn(obj){
+			//a.点击时主导航时的样式变化，及读取图片
+				//清空左边导航的样式
+				for (var i = 0; i < leftLis.length; i++) {
+					leftLis[i].className="";
+				}
+				//给左边导航添加点击样式，并读取数组中的图片
+				obj.className="selected";
+				img.src=arrImg[obj.index].right[0].src;
+
+			//b.点击时副导航自动生成
+				var str="";
+				for (var i = 0; i < arrImg[obj.index].right.length; i++) {
+					// console.dir(arrImg[obj.index].right.length)
+					str+="<li>"+arrImg[obj.index].right[i].text+"</li>"
+					// console.log(arrImg[obj.index].right[i])
+				}
+
+				rightUls.innerHTML=str;
+			// c.获取副导航li，并且给副导航第一个添加默认点击状态
+				var rightLis=rightUls.querySelectorAll("li");
+				rightLis[0].className="active";
+			//d.给副导航添加点击事件
+				for (var i = 0; i < rightLis.length; i++) {
+					rightLis[i].index=i;
+
+					rightLis[i].onclick=function(){
+						for (var i = 0; i < rightLis.length; i++){
+							rightLis[i].className="";
+						}
+						this.className="active";
+						img.src=arrImg[obj.index].right[this.index].src;
+						// console.log(arrImg[obj.index].right[this.index].src)
+					}
+				}
+
+			};
+	};
+
+               
+    </script>
+</head>
+<body>
+	<div id="tabs">
+		<ul id="nav">
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<div id="contents">
+           <img src="" style="display: block"/>
+           <ul></ul>
+           
+		</div>	
+	</div>
+</body>
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>todos</title>
+    <link rel="stylesheet" type="text/css" href="css/base.css">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+</head>
+
+<body>
+	<script src="src/react.js" type="text/javascript"></script>
+	<script src="src/react-dom.js" type="text/javascript"></script>
+	<script src="src/browser.min.js" type="text/javascript"></script>
+	<script type="text/babel">
+		
+	</script>
+    <section class="todoapp" id="box">
+      
+    </section>
+    <script type="text/babel">
+    
+    /********************总组件*******************************/
+    
+    var Box = React.createClass({
+    	getInitialState:function(){
+    		return {
+    			data:this.props.data,
+    			num:0
+    		}
+    	},
+		render:function(){
+			return (
+				<div>
+					<Header  fn={this.callBack}/>
+					<Content 
+						data={this.state.data} 
+						fn={this.callBack}
+						rm={this.removeFn}
+					/>
+					<Footer num={this.state.num}/>
+				</div>
+			)
+		},
+		callBack:function(obj){
+			var oldData = this.props.data;
+			var onOff = true;
+			var num2 = 0;
+			for(var i=0;i<oldData.length;i++){
+				if(oldData[i].id == obj.id){
+					oldData.splice(i,1,obj);
+					onOff = false;
+				}
+				if(oldData[i].checked){
+					num2++
+				}
+			}
+			if(onOff){
+				oldData.push(obj)
+			}
+			
+			this.setState({
+				data:oldData,
+				num:num2
+			})
+		},
+		removeFn:function(id){
+			var oldData = this.props.data;
+			var num2 = 0;
+			for(var i=0;i<oldData.length;i++){
+				if(oldData[i].id == id){
+					oldData.splice(i,1);
+					break
+				}
+			}
+			for(var i=0;i<oldData.length;i++){
+				if(oldData[i].checked){
+					num2++
+				}
+			}
+			this.setState({
+				data:oldData,
+				num:num2
+			})
+		}
+	})
+    	
+    	
+   /**********************头部********************************/
+  		/*
+  			需求2：
+  				1.在input down的时候，拿value值，加事件
+  		*/
+    	var Header = React.createClass({
+    		handleText:function(ev){
+    			if(ev.keyCode == 13){
+    				this.props.fn({cont:ev.target.value,checked:false,id:+new Date()});
+    				ev.target.value = '';
+    			}
+    		},
+    		render:function(){
+    			//console.log()
+    			return (
+    				<header className="header" >
+		                <h1>todos</h1>
+		                <input className="new-todo" placeholder="请输入内容" defaultValue="" onKeyDown={this.handleText}/>
+		            </header>
+    			)
+    		}
+    	})
+    	
+    /******************************* 内容  ***************************************/
+   
+   	var Content = React.createClass({
+			render:function(){
+				
+				//bind(this)   修改this的指向
+ 				return (
+					<section className="main">
+		                <input className="toggle-all" type="checkbox" checked="" />
+		                <ul className="todo-list">
+		                   {
+		                   		this.props.data.map(function(e,i){
+		                   			return <Li 
+		                   				data={e} 
+		                   				key={i} 
+		                   				fn={this.props.fn}
+		                   				rm={this.props.rm}
+		                   			/>
+		                   		}.bind(this))
+		                   }
+		                </ul>
+		            </section>
+				)
+			}
+    	})
+    	
+    /******************************* Li  ***************************************/
+    	
+    	var Li = React.createClass({
+    		handleChecked:function(){
+    			var checkedObj = {
+    				checked:!this.props.data.checked
+    			}
+    			
+    			/*
+    				因为控制状态要传入一个obj
+    				
+    				在控制层中：
+    					把修改过的checked值的对象传给控制层
+    				
+    					原有的数据有id
+    					修改以后的数据也有这个id
+    				
+    				如果说原有的数据中有传入数据的id那么替换	
+    				 	
+    			*/
+    			this.props.fn({
+    				cont:this.props.data.cont,
+    				id:this.props.data.id,
+    				checked:checkedObj.checked
+    			})
+    			
+    		},
+    		handleClick:function(){
+    			this.props.rm(this.refs.click.id);
+    		},
+			render:function(){
+				console.log(this.props.rm)
+				var setClass = {
+					className:this.props.data.checked?'completed':''
+				}
+				
+				return (
+					<li className={setClass.className}>
+                        <div className="view">
+                            <input 
+                            	className="toggle" 
+                            	type="checkbox" 
+                            	checked={this.props.data.checked}
+                            	onChange={this.handleChecked}
+                            	id={this.props.data.id}
+                            />
+                            <label>{this.props.data.cont}</label>
+                            <button 
+                            	className="destroy" 
+                            	onClick={this.handleClick}
+                            	ref="click"
+                            	id={this.props.data.id}
+                            ></button>
+                        </div>
+                    </li>
+				)
+			}
+    	})
+    	
+    	
+     /******************************* 脚步  ***************************************/
+    	var Footer = React.createClass({
+			render:function(){
+				return (
+					 <footer className="footer">
+			            <span className="todo-count">
+			            	<strong>{this.props.num}</strong>
+			            	<span>条已选中</span>
+			            </span>
+		            </footer>
+				)
+			}
+    	})
+
+    	var data = [
+    		{
+    			cont:'你你你你你',
+    			checked:false,
+    			id:0
+    		},
+    		{
+    			cont:'我我我我',
+    			checked:false,
+    			id:1
+    		},
+    		
+    	]
+    	
+    	ReactDOM.render(
+    		<Box data={data}/>,
+    		document.getElementById('box')
+    	)
+    	
+    	
+    	/*
+    	 	需求1:创建数据，渲染默认的数据
+    	 	
+    	 	需求2:操作header中输入框
+    	 	
+    	 	需求3:选中input改变class
+    	 	
+    	 	需求4：查看勾选的个数
+    	 	
+    	 	需求5:通过点击button，找到对应的id，然后将对应的id给删除
+    	 	
+    	 	
+    	*/
+    	
+    	
+    </script>
+</body>
+
+</html>

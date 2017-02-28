@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>计算商品价值总值</title>
+	<style type="text/css">
+		*{
+			margin: 0px;
+			padding: 0px;
+		}
+		ul{
+			width: 400px;
+			margin: 0 auto;
+			border: 1px solid #efefef;
+		}
+		li{
+			list-style: none;
+			height: 30px;
+			line-height: 30px;
+			padding-left: 30px;
+		}
+		h3{
+			height: 40px;
+			background: #f08080;
+			line-height: 40px;
+			padding: 5px 10px;
+
+		}
+		input{
+			padding: 2px 8px;
+		}
+		p{
+			padding:10px 30px;
+			border: 1px solid #efefef;
+			/*text-indent: 20px;*/
+		}
+
+	</style>
+	<script >
+		/*
+		需求：计算商品价格
+		分析：1.获取加减按钮、数量值、单价值，小计值
+					小计=数量值*单价值
+			  2.获取商品总件数sum，总价格price，比较其中最贵的商品单价
+			  		sum+=数量值
+			  		price+=小计值
+
+
+		*/
+		window.onload=function () {
+			var lis=document.querySelectorAll('li');
+			var Spans=document.querySelectorAll('li span');
+			var As=document.querySelectorAll('li a');
+			var Strongs=document.querySelectorAll('li strong');
+			var sum=document.getElementById('sum');
+			var price=document.getElementById('price');
+			var max=document.getElementById('max');
+			for (var i = 0; i < lis.length; i++) {
+				cost(i)
+			}
+
+			function cost(i){
+				var btn=lis[i].querySelectorAll('input');
+				var span=lis[i].querySelector('span');
+				var as=lis[i].querySelector('a');
+				var strong=lis[i].querySelector('strong');
+				var n=0;
+				// console.log(strong);
+				btn[0].onclick=function(){
+					n--;
+					//当数量小于0的时候停止减
+					if(n<0){
+						n=0;
+					}
+					span.innerHTML=n;
+					// console.log(as.innerHTML)
+					//小计=数量值*单价值
+					strong.innerHTML = n * as.innerHTML;
+					total()
+				}
+				btn[1].onclick=function(){
+					n++;
+					span.innerHTML=n;
+					//小计=数量值*单价值
+					strong.innerHTML=n*as.innerHTML;
+					total()
+				}
+			}
+			//计算总件数，总价值和比较其中最贵的单价
+			function total(){
+				var  a=0;			///累加件数总和
+				var  b=0;			//累加价格总和
+				var  M=0			//比较每一个单价值，取最大的赋值
+				for (var i = 0; i < lis.length; i++) {
+					a+=parseFloat(Spans[i].innerHTML);
+					console.log(a);
+					b+=parseFloat(Strongs[i].innerHTML);
+					console.log(b)
+					//当数量不为0时，去比较单价最贵的
+					if(Spans[i].innerHTML!=0){
+						if (parseFloat(As[i].innerHTML)>M) {
+							M=parseFloat(As[i].innerHTML);
+						}
+					}
+				}
+				max.innerHTML = M;
+				sum.innerHTML = a;
+				price.innerHTML = b;
+
+			}	
+			
+		}
+		
+	</script>
+</head>
+<body>
+	
+	<ul id='box'>
+		<h3>计算商品总价值</h3>
+		<li id="list">
+			商品1：
+			<input type="button" value="-" />
+			<span>0</span>
+			<input type="button" value="+" name="">
+			单价：<a>15</a>元
+			总计：<strong>0</strong>元
+		</li>
+		<li id="list">
+			商品2：
+			<input type="button" value="-" />
+			<span>0</span>
+			<input type="button" value="+" name="">
+			单价：<a>18</a>元
+			总计：<strong>0</strong>元
+		</li>
+		<li id="list">
+			商品3：
+			<input type="button" value="-" />
+			<span>0</span>
+			<input type="button" value="+" name="">
+			单价：<a>21</a>元
+			总计：<strong>0</strong>元
+		</li>
+		<li id="list">
+			商品4：
+			<input type="button" value="-" />
+			<span>0</span>
+			<input type="button" value="+" name="">
+			单价：<a>34.5</a>元
+			总计：<strong>0</strong>元
+		</li>
+	</div>
+	<p>合计：<br/>    商品一共<span id="sum">0</span>件；一共花费<span id="price">0</span>元；其中最贵的商品单价是<span id="max">0</span>元；</p>
+	
+</body>
+</html>

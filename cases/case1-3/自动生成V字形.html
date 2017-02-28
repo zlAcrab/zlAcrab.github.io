@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>5.自动生成V字形</title>
+	<style>
+		html,body{margin: 0px;padding: 0px;}
+		#btn{
+			display: block;
+			margin: 10px auto 10px;
+			padding: 5px 15px;
+			border-radius: 5px;
+		}
+		#content{
+			position: relative;
+			margin: 0 auto;
+			width: 500px;
+			height: 500px;
+			border:2px solid #000;
+			background: #f08080;
+			margin-top: 10px;
+
+		}
+		#content span{
+			position:absolute;
+			background: #fff;
+			display:block;
+			width: 100px;
+			height: 100px;
+		}
+		/*
+		向上 
+		.v01{
+
+			top:0px;
+			left:0px;
+		}
+		.v02{
+			top:100px;
+			left:100px;
+		}
+		.v03{
+			top:200px;
+			left:200px;
+		}
+		.v04{
+			top:100px;
+			left:300px;
+		}
+		.v05{
+			top:0px;
+			left:400px;
+		}
+		*/
+	
+	</style>
+	<script >
+		/*
+			分析：
+				向上 	
+				i  left	    top      n
+				0	0		0		 0
+				1	100		100		 1
+				2	200		200		 2
+				3	300		100		 1
+				4	400		0 		 0
+				left = i*100
+				如果i<=2
+					top = i*100
+					
+				否则
+					top = 400 - i*100
+					
+				向右	
+				i	left	top
+				0	400		0
+				1	300		100
+				2	200		200
+				3	300		300
+				4	400		400
+				top = i*100
+				如果i<=2
+					left = 400-i*100
+				否则
+					left = i*100
+					
+					
+				向下
+				i	left	top
+				0	0		400
+				1	100		300
+				2	200		200
+				3	300		300
+				4	400		400
+				left = i*100
+				如果i<=2
+					top = 400-i*100
+				否则
+					top = i*100
+					
+				向左
+				i	left	top
+				0	0		0
+				1	100		100
+				2	200		200
+				3	100		300
+				4	0		400
+				top = i*100
+				如果i<=2
+					left = i*100
+				否则
+					left = 400-i*100
+			*/
+			window.onload=function () {
+				var btn=document.querySelector('#btn');
+				var content=document.querySelector('#content');
+			//生成span的总数
+				var n=5;
+				var mid = Math.floor( n / 2 );  				// 中间分界点
+				var htmlSpan = "";
+				var j = 0;
+				
+				content.innerHTML = htmlSpan;
+			//console.log(htmlSpan);
+
+				btn.onclick=function(){
+					//console.log(htmlSpan)
+					content.style.display='block'
+					htmlSpan = "";
+					j++;
+					if(j%4==0){
+					//向左开口v字
+						for( var i = 0; i < n; i++ ){
+							if( i <= mid ){
+								htmlSpan += '<span style="left:'+(i*100)+'px;top:'+ (i*100) +'px;"></span>';
+							}else{
+								htmlSpan += '<span style="left:'+( (n-1-i)*100 )+'px;top:'+ (i*100) +'px;"></span>';
+							}
+							
+						};
+					}else if(j%4==1){
+					//向上开口v字
+						for( var i = 0; i < n; i++ ){
+
+							if( i <= mid ){
+								htmlSpan += '<span style="left:'+(i*100)+'px;top:'+ (i*100) +'px;"></span>';
+							}else{
+								htmlSpan += '<span style="left:'+(i*100)+'px;top:'+ ((n-1-i)*100) +'px;"></span>';
+							}
+						};
+					}else if(j%4==2){
+						//向右开口v字
+						//console.log(j)
+						for( var i = 0; i < n; i++ ){
+
+							if( i <= mid ){
+								htmlSpan += '<span style="left:'+( ( n-1-i ) *100)+'px;top:'+ (i*100) +'px;"></span>';
+							}else{
+								htmlSpan += '<span style="left:'+(i*100)+'px;top:'+ (i*100) +'px;"></span>';
+							}
+						};
+						
+
+					}else if(j%4==3){
+					//向下开口v字
+						for( var i = 0; i < n; i++ ){
+							if( i <= mid ){
+								htmlSpan += '<span style="left:'+( i*100 )+'px;top:'+ (( n-1-i ) *100) +'px;"></span>';
+							}else{
+								htmlSpan += '<span style="left:'+(i*100)+'px;top:'+ (i*100) +'px;"></span>';
+							}
+						};
+					};
+					//console.log(htmlSpan);		
+					//console.log(content.innerHTML);		//空
+					content.innerHTML = htmlSpan;
+				};
+			};
+
+						 
+
+
+		
+	</script>
+</head>
+<body>
+	<button id='btn' type="button">按钮</button>
+	<div id="content" style="display:none">
+		<!-- <span style='top:0px;left:0px'></span>
+		<span style='top: 100px;left:100px'></span>
+		<span style='top:200px;left:200px'></span>
+		<span style="top:300px;left:100px"></span>
+		<span style="top:400px;left:0px"></span> -->
+
+
+	</div>
+	
+</body>
+</html>

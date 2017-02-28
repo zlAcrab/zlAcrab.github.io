@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>作业1--模拟短信作业</title>
+	<style >
+		*{margin: 0;padding: 0;}
+		#phone{
+			width: 340px;
+			height:708px; 
+			background: url(img/bg.jpg) no-repeat; 
+			margin: 0 auto; 
+			position: relative;
+		}
+		.bg{
+			width: 290px;
+			height: 435px;
+			background: url(img/1.jpg) no-repeat;
+			background-size: cover;
+			background-position: center;
+			position: absolute;
+			top: 100px; 
+		 	left:25px; 
+		 	border-top-radius: 5px;
+
+		}
+		#panel{
+			position: absolute;
+		 	top: 0px; 
+		 	left:13px; 
+		 	overflow: auto;
+		 	width: 290px;
+		 	height: 435px;
+
+
+		 }
+		#panel li{
+			list-style: none;
+
+
+		}
+		.admin01 {
+			float: left;
+			margin-top: 20px;
+			width: 263px;
+		 	
+		}
+		.admin01  img{
+			width: 35px;
+			height: 35px;
+		}
+		.admin01 span{
+			float: left;
+
+		}
+		.admin01 p{
+			float: left;
+			margin-left: 3px;
+			max-width: 200px;
+			display: inline-block;
+			word-wrap:break-word;
+			background:#21c618; 
+			font-size: 14px;
+			color: #fff; 
+			padding: 3px 10px; 
+			line-height: 30px;
+			border-radius: 5px;
+			letter-spacing: 1px; 
+			text-align: left;
+		}
+		.admin02 {
+			float: right;
+			margin-top: 20px;
+			margin-right: 30px;
+			width: 263px;
+		}
+		.admin02 img{
+			width: 35px;
+			height: 35px;
+		}
+		.admin02 span{
+			float: right;
+		}
+		.admin02 p{
+			float: right;
+			margin-right:5px;
+			max-width: 200px;
+			display: inline-block; 
+			word-wrap:break-word;
+			background:#ffb9b4; 
+			font-size: 14px;
+			color: #fff; 
+			padding: 3px 10px; 
+			line-height: 30px;
+			border-radius: 5px;
+			letter-spacing: 1px; 
+			text-align: right;
+		}
+
+		/*发送栏*/
+		#write{
+			position: absolute;
+			bottom: 100px;
+			left:25px;
+			width: 270px; 
+			background: #f4f4f4;
+			padding: 20px 10px 15px 10px;
+			border-top: 3px #999;
+			border-top-style: double;
+			box-shadow: 0px 1px 5px #999 inset;
+		}
+		#write span{
+			border: 1px solid #999 ;
+			border-radius: 5px;
+			float: left; 
+			display: inline-block;
+			margin-right: 10px;
+			box-shadow: 0px 1px 2px #999 inset;
+			cursor: pointer;
+			}
+		#write span img{
+			width: 30px;
+			height: 30px;
+		}
+		#message{
+			line-height: 25px;
+			border-radius: 5px;
+			font-size: 13px;
+			overflow:hidden;
+			width: 150px;
+		}
+		#post{
+			display: inline-block;
+			margin-left: 1px;
+			padding: 2px 2px;
+			cursor: pointer;
+			border-radius: 5px;
+			width: 60px;
+		}
+
+	</style>
+
+	<script >
+		window.onload=function(){
+		/*
+			需求1:1.点击头像按钮更换头像
+				 2.点击按钮将输入框里的内容发送到屏幕上
+
+			分析：
+				 点击头像更换：
+				 	1.获取头像按钮
+				 	2.点击按钮开关，给按钮添加点击事件,分为两种情况
+					 	当按钮开关on时，显示头像1：src='img/b1.jpg'
+					 	当按钮开关关上时，显示头像2:src='img/b2.jpg'
+		*/
+				var pic = document.getElementById("adminPhoto");
+				var onOff = true;
+		
+				pic.onclick = function (){
+					//alert(1);
+					if( onOff ){  //开关打开 能切换到 "img/b2.png"
+						pic.src='img/b2.png';
+						onOff = false;
+					}else{//开关关闭，切换到 "img/b1.png"
+						pic.src = "img/b1.png";
+						onOff = true;
+					}
+				}
+		/*
+			需求2：点击发送按钮，获取输入框里的内容，发送到手机屏幕上。
+			分析：
+					1.获取按钮，输入框以及屏幕（ul）
+					2.给按钮添加点击事件
+						a.获取输入框text的value值，
+						b.将value值添加到ul内
+							创建li
+							将input的value值添加到li上
+							将li添加到ul内
+		*/
+				var post=document.querySelector('#post');
+				var text=document.getElementById('message');
+				var ul=document.getElementById('panel');
+					text.onkeydown=function(ev){
+						if(post.value=='enter'&&ev.keyCode==13&&!ev.ctrlKey&&!ev.altKey&&!ev.shiftKey){
+							inner();
+						}
+						if(post.value=='ctrl+enter'&&ev.ctrlKey && ev.keyCode==13){
+							console.log(post.value)
+							inner();
+						}
+
+					}
+
+					post.onkeydown=function(ev){
+						if(post.value=='enter'&&ev.keyCode==13&&!ev.ctrlKey&&!ev.altKey&&!ev.shiftKey){
+						// var val=text.value;	
+							inner();
+						}
+
+						if(post.value=='ctrl+enter'&&ev.ctrlKey && ev.keyCode==13){
+							console.log(post.value)
+							inner();
+						}
+
+					}
+
+					function inner() {
+						if(text.value==''){
+							alert("发送的内容不能为空！");
+						}else{
+							if(onOff){
+								
+								li='<li class="admin01"><span><img src="img/b1.png"></span><p>'+text.value+'</p></li>';
+							}else{
+
+								li='<li class="admin02"><span><img src="img/b2.png"></span><p>'+text.value+'</p></li>'
+							}
+								ul.innerHTML+=li;
+								text.value=""
+						}
+					}
+		}
+		
+		
+	</script>
+</head>
+<body>
+
+	<div id="phone">
+		<div class="bg">
+			<ul id="panel">
+				<!-- <li class="admin01">
+					<span><img src="img/b1.png"></span>
+					<p>你好，我是土豪</p>
+				</li>
+				<li class="admin02">
+					<span><img src="img/b2.png"></span>
+					<p>土豪，我们做朋友吧</p>
+				</li> -->
+			</ul>
+		</div>
+		<div id="write">
+			<span><img  id="adminPhoto" src="img/b1.png"></span>
+			<input type="text" id="message" value="">
+			<!-- <type="button" id="post" value="发送"> -->
+			<select name="post" id="post" >
+				<option value="enter">enter</option>
+				<option value="ctrl+enter">ctrl+enter</option>
+			</select>
+		</div>
+	</div>
+	
+</body>
+</html>

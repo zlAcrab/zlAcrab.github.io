@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>修改与保存demo</title>
+	<style>
+		* { margin: 0; padding: 0;}
+		dl { width: 300px; margin: 100px auto; border: 10px solid #ffefd5;}
+		dt { height: 60px; line-height: 60px; font-size: 30px; text-align: center; background-color: #fa8072; color: #fff; }
+		dd { height: 40px; width: 100%; overflow: hidden; padding-top: 10px;}
+		dd:nth-of-type(2n+1) { background-color: #fff; }
+		dd:nth-of-type(2n) { background-color: #ffdead;}
+		dd div { height: 30px; width: 170px; line-height: 30px; font-size: 18px; text-indent: 30px; color: #fa8072; float: left;}
+		dd input {  height: 30px; line-height: 30px; color: #fff; border: none; outline: none; background-color: #fa8072; border-radius: 5px; float: left; font-size: 18px; border-radius: 5px; margin-left: 10px; box-shadow: inset 0 0 10px #fff; }
+		dd input[value="edit"] {  width: 50px;  text-align: center;   }
+		dd input[type="text"] { width: 160px;   text-indent: 20px; display: none; }
+		dd input[value="save"] { width: 50px;  text-align: center; display: none;}
+		dd input[value="cancel"] { width: 50px;  text-align: center; font-size: 16px; display: none; }
+		dd.active div { display: none;}
+		dd.active input[value="edit"] { display: none;}
+		dd.active input[type="text"] { display: block;}
+		dd.active input[value="save"] { display: block;}
+		dd.active input[value="cancel"] { display: block;}
+	</style>
+	<script>
+		window.onload = function() {
+			var dds = document.querySelectorAll("dd");
+			function editFn (obj) {
+				var div = obj.querySelector("div");
+				console.log(div.innerHTML);
+				var text = obj.querySelector("input[type=text]");
+				var edit = obj.querySelector("input[value=edit]");
+				var save = obj.querySelector("input[value=save]");
+				var cancel = obj.querySelector("input[value=cancel]");
+				edit.onclick = function() {
+					for (var i = 0; i < dds.length; i++) {
+						dds[i].className = "";
+					};
+					obj.className = "active";
+					text.value = div.innerHTML;
+				};
+				save.onclick = function() {
+					obj.className = "";
+					div.innerHTML = text.value;
+				};
+				cancel.onclick = function() {
+					obj.className = "";
+				};
+			}
+			for (var i = 0; i < dds.length; i++) {
+				editFn(dds[i]);
+			};
+		};
+	</script>
+</head>
+<body>
+	<dl>
+		<dt>兰花草</dt>
+		<dd>
+			<div>我从山中来</div>
+			<input type="text" value="带着兰花草" />
+			<input type="button" value="edit"/>
+			<input type="button" value="save"/>
+			<input type="button" value="cancel"/>
+		</dd>
+		<dd>
+			<div>带着兰花草</div>
+			<input type="text" value="带着兰花草" />
+			<input type="button" value="edit"/>
+			<input type="button" value="save"/>
+			<input type="button" value="cancel"/>
+		</dd>
+		<dd>
+			<div>种在校园里</div>
+			<input type="text" value="带着兰花草" />
+			<input type="button" value="edit"/>
+			<input type="button" value="save"/>
+			<input type="button" value="cancel"/>
+		</dd>
+		<dd>
+			<div>希望花开早</div>
+			<input type="text" value="带着兰花草" />
+			<input type="button" value="edit"/>
+			<input type="button" value="save"/>
+			<input type="button" value="cancel"/>
+		</dd>
+		<dd>
+			<div>一日看三回</div>
+			<input type="text" value="带着兰花草" />
+			<input type="button" value="edit"/>
+			<input type="button" value="save"/>
+			<input type="button" value="cancel"/>
+		</dd>
+		<dd>
+			<div>看的花时过</div>
+			<input type="text" value="带着兰花草" />
+			<input type="button" value="edit"/>
+			<input type="button" value="save"/>
+			<input type="button" value="cancel"/>
+		</dd>
+		
+	</dl>
+</body>
+</html>
